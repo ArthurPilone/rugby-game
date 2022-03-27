@@ -31,8 +31,6 @@ short add_position_to_array(position_t x, position_t*, int, int);
 
 direction_t execute_defender_strategy(
     position_t defender_position, Spy attacker_spy) {
-  // TODO: unused parameters, remove these lines later
-  UNUSED(attacker_spy);
 
   // State Variables
   static int tick = 0;
