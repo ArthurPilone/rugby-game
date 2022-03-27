@@ -44,26 +44,26 @@ void rank_directions (direction_t*, float);
 
 direction_t check_for_deadend(position_t*, position_t);
 
-// State Variables
-int tick = 0;
-int saved_positions_no = 0;
-int known_walls_no = 0;
-
-visited_position visited_positions[MAX_SAVED_POSITIONS];
-position_t known_walls[MAX_SAVED_POSITIONS];
-position_t last_visited_position;
-position_t last_tested_position;
-
-size_t farthest_j_coord = 0;
-
-direction_t tested_directions[8];
-
 /*----------------------------------------------------------------------------*/
 /*                              PUBLIC FUNCTIONS                              */
 /*----------------------------------------------------------------------------*/
 
 direction_t execute_attacker_strategy(
     position_t attacker_position, Spy defender_spy) {
+
+  // State Variables
+  static int tick = 0;
+  static int saved_positions_no = 0;
+  static int known_walls_no = 0;
+
+  static visited_position visited_positions[MAX_SAVED_POSITIONS];
+  static position_t known_walls[MAX_SAVED_POSITIONS];
+  static position_t last_visited_position;
+  static position_t last_tested_position;
+
+  static size_t farthest_j_coord = 0;
+
+  static direction_t tested_directions[8];
 
   short moved = 1;
   direction_t at_deadend = (direction_t) DIR_STAY;
@@ -75,7 +75,7 @@ direction_t execute_attacker_strategy(
 
     farthest_j_coord = get_spy_position(defender_spy).j;
 
-    srand((unsigned) 11795450 + time(NULL));
+    srand((unsigned) 15110015 + time(NULL));
   }else{
     moved = !equal_positions(attacker_position, last_visited_position);
   }
@@ -231,7 +231,7 @@ direction_t choose_next_direction(
       position_array_contains(candidate_pos,known_walls, known_walls_no)){
         continue;
     }
-    else if( (visits_to_best_candidate +2* (best_candidate.i)) > (visits_to_candidate_pos +2*candidate_pos.i)){
+    else if( visits_to_best_candidate > visits_to_candidate_pos){
       best_candidate = direction_queue[k];
       visits_to_best_candidate = visits_to_candidate_pos;
     }
